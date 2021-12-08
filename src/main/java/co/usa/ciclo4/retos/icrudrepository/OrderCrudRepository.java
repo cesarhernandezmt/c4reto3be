@@ -7,6 +7,7 @@ package co.usa.ciclo4.retos.icrudrepository;
 
 import co.usa.ciclo4.retos.dmodel.Order;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.data.mongodb.repository.Query;
 
@@ -19,9 +20,9 @@ import org.springframework.data.mongodb.repository.Query;
 public interface OrderCrudRepository extends MongoRepository<Order, Integer> {
 
     /**
-     * Metodo Query para encontrar los registros de documento de orden por el 
-     * valor de su atributo 'zone'. Se pasa el valor del atributo 'salesMan.zone'
-     * en la posición '0'
+     * Metodo Query para encontrar y retornar los registros de documento de 
+     * orden por el valor de su atributo 'zone', establecido como parámetro. 
+     * Se pasa el valor del atributo 'salesMan.zone' en la posición '0'
      * @param zone
      * @return 
      */
@@ -31,11 +32,18 @@ public interface OrderCrudRepository extends MongoRepository<Order, Integer> {
     
     /**
      * Metodo Query para encontrar los registros de documento de orden por el 
-     * valor de su atributo 'status'.
+     * valor de su atributo 'status', establecido como parámetro.
      * @param status
      * @return 
      */
-    //@Query("{'status':?0}")
+    @Query("{'status':?0}")
     public List<Order> findByStatus(String status);
+    
+    /**
+     * Metodo Query para seleccionar el registro de documento de la orden, 
+     * con el valor mayor en el atributo 'id'
+     * @return 
+     */
+    Optional<Order> findTopByOrderByIdDesc();    
     
 }

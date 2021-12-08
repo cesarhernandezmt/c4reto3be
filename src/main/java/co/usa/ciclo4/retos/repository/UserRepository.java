@@ -59,7 +59,7 @@ public class UserRepository {
     }
     
     /**
-     * Metodo para actualizar un registro de documento de cuenta 
+     * Metodo para actualizar y retornar un registro de documento de cuenta 
      * de usuario hacia el metodo 'update' del MongoRepository
      * @param user 
      */
@@ -68,7 +68,7 @@ public class UserRepository {
     }
     
     /**
-     * Metodo para eliminar un registro de documento de cuenta de 
+     * Metodo para eliminar y retornar un registro de documento de cuenta de 
      * usuario hacia el metodo 'delete' del MongoRepository
      * @param user 
      */
@@ -146,6 +146,16 @@ public class UserRepository {
     */
     public Optional<User> getUserEmailAndPassword(String email, String password) {
         return userCrudRepository.findByEmailAndPassword(email, password);
+    }
+    
+    /**
+     * Metodo para obtener y retornar un registro de documento de producto
+     * cuyo valor de atributo 'id' sea el mayor, devuelto hacia el metodo 
+     * 'findTopByOrderByIdDesc' del CloneCrudRepository
+     * @return 
+     */
+    public Optional<User> getUserWithLastId(){
+        return userCrudRepository.findTopByOrderByIdDesc();
     }
     
 }

@@ -7,10 +7,11 @@ package co.usa.ciclo4.retos.dmodel;
 
 import java.util.Date;
 import java.util.Map;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -60,14 +61,13 @@ public class Order {
     private User salesMan;
 
     /**
-     * 
+     * Atributo 'products' del Documento
      */
     private Map<String, Clone> products;
     
     /**
-     * 
+     * Atributo 'qualities' del Documento
      */
     private Map<String, Integer> quantities;
 
-  
 }

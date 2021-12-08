@@ -55,23 +55,24 @@ public class CloneService {
      * @return
      */
     public Clone save(Clone clone) {
+        
+        Optional<Clone> cloneWithLastId = cloneRepository.getCloneWithLastId();
+        if(clone.getId() == null) {
+            if(cloneWithLastId.isEmpty())
+                clone.setId(1);
+            else
+                clone.setId(cloneWithLastId.get().getId() + 1);
+        }
+        
         if (clone.getBrand() == null || clone.getProcesor() == null || clone.getOs() == null
                 || clone.getDescription() == null || clone.getMemory() == null 
                 || clone.getHardDrive() == null) {
             return clone;
-        } 
-        else {
+        } else {
             if (clone.getId() == null) {
+                return clone;
+            } else {
                 return cloneRepository.save(clone);
-            } 
-            else {
-                Optional<Clone> cloneOptional = cloneRepository.getCloneById(clone.getId());
-                if(cloneOptional.isEmpty()){
-                    return cloneRepository.save(clone);
-                }
-                else {
-                    return clone;
-                }
             }
         }
     }
@@ -126,8 +127,7 @@ public class CloneService {
 
     /**
      * Metodo para eliminar y retornar un registro de documento de producto 
-     * por el valor de su atributo 'id', hacia el metodo 'delete' del 
-     * CloneRepository
+     * hacia el metodo 'delete' del CloneRepository
      * @param id
      * @return
      */

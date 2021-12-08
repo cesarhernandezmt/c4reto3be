@@ -74,6 +74,16 @@ public class OrderRepository {
      */
     public void delete(Order order) {
         orderCrudRepository.delete(order);
+    }
+    
+    /**
+     * Metodo para obtener y retornar un registro de documento de la orden
+     * cuyo valor de atributo 'id' sea el mayor, devuelto hacia el metodo 
+     * 'findTopByOrderByIdDesc' del OrderCrudRepository
+     * @return 
+     */
+    public Optional<Order> getOrderWithLastId(){
+        return orderCrudRepository.findTopByOrderByIdDesc();
     }    
     
     /**

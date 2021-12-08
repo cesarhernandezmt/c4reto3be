@@ -56,12 +56,12 @@ public class UserController {
      * del UserService
      * @param id
      * @return 
-     
+     */
     @GetMapping("/{id}")
     public Optional<User> getUser(@PathVariable("id") Integer id) {
         return userService.getUserById(id);
     }
-    */
+    
     /**
      * Metodo para guardar y retornar un registro de documento de cuenta de 
      * usuario hacia el metodo 'save' del UserService
@@ -104,11 +104,17 @@ public class UserController {
      * UserService
      * @param email
      * @return 
-     */
+     *//*
+    @GetMapping("/emailexist/{email}")
+    public boolean emailExist(@PathVariable("email") String email) {
+        return userService.getUserByEmail(email);
+    }*/
+    
     @GetMapping("/emailexist/{email}")
     public boolean emailExist(@PathVariable("email") String email) {
         return userService.getUserByEmail(email);
     }
+    
     
     /**
      * Metodo para obtener y retornar un registro de cuenta de usuario por
@@ -124,14 +130,6 @@ public class UserController {
         return userService.getUserEmailAndPassword(email, password);
     }
     
-/**
-     *
-     * @param id
-     * @return
-     */
-    @GetMapping("/{id}")
-    public User getUser(@PathVariable("id") Integer id){
-        return userService.getUserById(id);
-    }
-
+    
+    
 }

@@ -88,7 +88,7 @@ public class CloneController {
 
     /**
      * Metodo para eliminar y retornar un registro de documento de cuenta de 
-     * usuario hacia el metodo 'delete' del CloneService
+     * usuario hacia el metodo 'delete' del UserService
      * @param id
      * @return 
      */

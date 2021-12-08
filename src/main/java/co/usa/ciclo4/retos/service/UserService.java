@@ -44,15 +44,8 @@ public class UserService {
      * @param id
      * @return 
      */
-    public User getUserById(Integer id) {
-        Optional<User> usuarioOptional = userRepository.getUserById(id);
-        if(usuarioOptional.isPresent()){
-            return usuarioOptional.get();
-        }else{
-            return new User();
-        }
-        //return userRepository.getUserById(id).orElse(new User());
-
+    public Optional<User> getUserById(Integer id) {
+        return userRepository.getUserById(id);
     }
     
     /**
@@ -62,6 +55,15 @@ public class UserService {
      * @return 
      */
     public User save(User user) {
+        
+        Optional<User> userWithLastId = userRepository.getUserWithLastId();
+        if(user.getId() == null) {
+            if(userWithLastId.isEmpty())
+                user.setId(1);
+            else
+                user.setId(userWithLastId.get().getId() + 1);
+        }
+        
         if(user.getIdentification() == null || user.getName() == null || user.getEmail() == null || 
                 user.getPassword() == null || user.getAddress() == null || user.getCellPhone() == null || 
                 user.getZone() == null || user.getType() == null) {
@@ -91,7 +93,7 @@ public class UserService {
     
     /**
      * Metodo para actualizar y retornar un registro de documento de cuenta 
-     * de usuario, hacia el metodo 'update' del UserRepository
+     * de usuario hacia el metodo 'update' del UserRepository
      * @param user
      * @return 
      */
@@ -104,6 +106,12 @@ public class UserService {
                 }
                 if (user.getName() != null) {
                     userOptional.get().setName(user.getName());
+                }
+                if (user.getBirthtDay() != null) {
+                    userOptional.get().setBirthtDay(user.getBirthtDay());
+                }
+                if (user.getMonthBirthtDay() != null) {
+                    userOptional.get().setMonthBirthtDay(user.getMonthBirthtDay());
                 }
                 if (user.getAddress() != null) {
                     userOptional.get().setAddress(user.getAddress());
@@ -137,7 +145,7 @@ public class UserService {
 
     /**
      * Metodo para eliminar y retornar un registro de documento de cuenta de 
-     * usuario por su atributo 'id', hacia el metodo 'delete' del UserRepository
+     * usuario hacia el metodo 'delete' del UserRepository
      * @param userId
      * @return 
      */
@@ -210,5 +218,39 @@ public class UserService {
             return new User();
         }
     }
-    
+
+    /**
+     * 
+     * @param email
+     * @return 
+     */
+    public boolean verifyEmail(String email) {
+        boolean flag = false;
+        List<User> users = userRepository.getAll();
+        for (User user : users) {
+            if (email.equals(user.getEmail())) {
+                flag = true;
+            }
+        }
+        return flag;
+    }
+
+    /**
+     * Metodo para verificar si un usuario existe en la base de datos
+     *
+     * @param email
+     * @param pass
+     * @return
+     */
+    public User verifyUser(String email, String pass) {
+        List<User> users = userRepository.getAll();
+        User notExit = User.builder().build();
+        for (User user : users) {
+            if (email.equals(user.getEmail()) && pass.equals(user.getPassword())) {
+                return user;
+            }
+        }
+        return notExit;
+    }    
+ 
 }

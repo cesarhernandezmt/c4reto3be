@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 
 /**
  *
- * 
+ * Clase Servicio 'OrderService'
  */
 @Service
 public class OrderService {
@@ -54,6 +54,15 @@ public class OrderService {
      * @return
      */
     public Order save(Order order) {
+        
+        Optional<Order> orderWithLastId = orderRepository.getOrderWithLastId();
+        if(order.getId() == null) {
+            if(orderWithLastId.isEmpty())
+                order.setId(1);
+            else
+                order.setId(orderWithLastId.get().getId() + 1);
+        }      
+        
         if(order.getRegisterDay() == null || order.getStatus() == null 
                 || order.getSalesMan() == null) {
             return order;
@@ -93,12 +102,12 @@ public class OrderService {
                 if (order.getStatus() != null) {
                     orderOptional.get().setStatus(order.getStatus());
                 }
-                if (order.getProducts() != null) {
+              /*if (order.getProducts() != null) {
                     orderOptional.get().setProducts(order.getProducts());
                 }
                 if (order.getQuantities() != null) {
                     orderOptional.get().setQuantities(order.getQuantities());
-                }
+                }*/
                 orderRepository.update(orderOptional.get());
                 return orderOptional.get();
             } else {

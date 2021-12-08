@@ -6,10 +6,12 @@ package co.usa.ciclo4.retos.dmodel;
 
 
 import java.util.Date;
-import javax.persistence.Id;
+//import javax.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.Builder;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -19,8 +21,10 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Document (collection = "usuarios")
 public class User {
+
     
     /**
      * Atributo 'id' del Documento
@@ -41,12 +45,12 @@ public class User {
     /**
      * Atributo 'birthDay' de la Entidad
      */    
-    private Date birthDay;
+    private Date birthtDay;
     
     /**
      * Atributo 'monthBirthDay' de la Entidad
      */    
-    private String monthBirthDay;
+    private String monthBirthtDay;
     
     /**
      * Atributo 'address' de la Entidad
