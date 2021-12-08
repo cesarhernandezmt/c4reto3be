@@ -44,6 +44,6 @@ public interface OrderCrudRepository extends MongoRepository<Order, Integer> {
      * con el valor mayor en el atributo 'id'
      * @return 
      */
-    Optional<Order> findTopByOrderByIdDesc();    
+    public Optional<Order> findTopByOrderByIdDesc();    
     
 }
